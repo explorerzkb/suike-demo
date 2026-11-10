@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>随课 · 作品视频与 PPT</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/lxgwwenkaigbscreen.css">
+<style>
+:root{--ink:#3a332d;--sub:#80766c;--line:#d6cdbf;--paper:#f2ede4;--accent:#b5562b;
+  --font:"LXGW WenKai Screen","霞鹜文楷 GB 屏幕阅读版","Kaiti SC","STKaiti","KaiTi",serif}
+*{box-sizing:border-box}
+html{background:#e9e3d8}
+body{margin:0;color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.7;
+  background:radial-gradient(ellipse at 50% 0,#f4f0e8 0,#ebe5da 55%,#e2dbcf 100%) fixed}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 20px 56px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px 32px;padding-bottom:24px;border-bottom:1px solid var(--line)}
+h1{font-size:44px;line-height:1.1;margin:0;font-weight:400;letter-spacing:.04em}
+.tag{color:var(--sub);font-size:15px;margin-top:10px}
+.lead{margin:6px 0 0;font-size:18px}
+.cta{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.btn{display:inline-block;font:inherit;font-size:18px;color:#fffaf2;background:var(--ink);border-radius:999px;padding:11px 26px;text-decoration:none;box-shadow:0 10px 24px -14px rgba(40,30,20,.7);transition:transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn .arr{margin-left:8px}
+.cta small{color:var(--sub);font-size:13.5px}
+nav.jump{display:flex;gap:22px;margin:18px 0 0;font-size:15px}
+nav.jump a{color:var(--sub);text-decoration:none;border-bottom:1px solid transparent}
+nav.jump a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+section{margin-top:44px}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 20px;margin-bottom:14px}
+h2{font-size:24px;font-weight:400;margin:0}
+h2 .n{color:var(--sub);font-size:15px;margin-right:10px}
+.meta{color:var(--sub);font-size:14px}
+.meta a{color:var(--sub)}
+.frame{background:#111;border-radius:10px;overflow:hidden;box-shadow:0 30px 60px -30px rgba(40,30,20,.55)}
+video{display:block;width:100%;aspect-ratio:16/9;background:#111}
+.deck{background:var(--paper);border-radius:10px;box-shadow:0 30px 60px -30px rgba(40,30,20,.45);overflow:hidden}
+.view{position:relative;aspect-ratio:16/9;background:#f3efe6;user-select:none}
+.view img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.view button{position:absolute;top:0;bottom:0;width:22%;border:0;background:none;cursor:pointer;font:inherit;color:transparent}
+.view button:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
+.view .prev{left:0}.view .next{right:0}
+.view button span{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(58,51,45,.72);color:#fff;font-size:22px;line-height:44px;text-align:center;opacity:0;transition:opacity .15s}
+.view .prev span{left:14px}.view .next span{right:14px}
+.view:hover button span{opacity:1}
+.view button[disabled]{cursor:default}.view button[disabled] span{opacity:0!important}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;border-top:1px solid var(--line);font-size:14px;color:var(--sub)}
+.bar .ctl{display:flex;gap:8px}
+.bar button{font:inherit;font-size:14px;color:var(--ink);background:none;border:1px solid var(--line);border-radius:6px;padding:3px 14px;cursor:pointer}
+.bar button:hover{border-color:var(--ink)}
+.bar button[disabled]{opacity:.4;cursor:default;border-color:var(--line)}
+.thumbs{display:flex;gap:8px;overflow-x:auto;padding:12px 16px 16px;border-top:1px solid var(--line);scrollbar-width:thin}
+.thumbs button{flex:0 0 auto;width:120px;padding:0;border:2px solid transparent;border-radius:4px;background:none;cursor:pointer;position:relative}
+.thumbs img{display:block;width:100%;aspect-ratio:16/9;border-radius:2px;opacity:.7}
+.thumbs button[aria-current="true"]{border-color:var(--ink)}
+.thumbs button[aria-current="true"] img,.thumbs button:hover img{opacity:1}
+.thumbs i{position:absolute;left:4px;bottom:3px;font-style:normal;font-size:11px;color:var(--sub);background:rgba(243,239,230,.85);padding:0 4px;border-radius:3px}
+.notes{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);color:var(--sub);font-size:14px}
+.notes p{margin:4px 0}
+.notes a{color:var(--sub)}
+@media (max-width:640px){
+  .wrap{padding-top:28px}
+  h1{font-size:36px}
+  .lead{font-size:16px}
+  .btn{font-size:17px}
+  .view button span{opacity:1;width:36px;height:36px;line-height:36px;font-size:18px}
+  .thumbs button{width:92px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>随课</h1>
+      <p class="lead">上课有疑问跟不上，一键随课回来。</p>
+      <div class="tag">课堂伴学智能体 · 命题领域：教育 · 第二届全国人工智能应用创新大赛参赛作品</div>
+      <nav class="jump"><a href="#video">作品视频</a><a href="#ppt">参赛 PPT</a><a href="index.html">网页体验版</a></nav>
+    </div>
+    <div class="cta">
+      <a class="btn" href="index.html">打开网页体验版<span class="arr">→</span></a>
+      <small>手机、电脑浏览器都能直接用，不用账号</small>
+    </div>
+  </header>
+
+  <section id="video">
+    <div class="sec-head">
+      <h2><span class="n">一</span>作品视频</h2>
+      <span class="meta">3 分 24 秒 · 有旁白，请打开声音 · <a href="intro/suike-video.mp4" download="随课-作品视频.mp4">下载视频</a></span>
+    </div>
+    <div class="frame">
+      <video controls playsinline preload="metadata" poster="intro/poster.jpg" src="intro/suike-video.mp4"></video>
+    </div>
+  </section>
+
+  <section id="ppt">
+    <div class="sec-head">
+      <h2><span class="n">二</span>参赛 PPT</h2>
+      <span class="meta">17 页 · 点左右两侧或用键盘 ← → 翻页 · <a href="intro/suike-ppt.pptx" download="随课-参赛PPT.pptx">下载 PPT 原件</a></span>
+    </div>
+    <div class="deck">
+      <div class="view" id="view">
+        <img id="slide" alt="">
+        <button class="prev" id="prev" aria-label="上一页"><span>‹</span></button>
+        <button class="next" id="next" aria-label="下一页"><span>›</span></button>
+      </div>
+      <div class="bar">
+        <span id="count"></span>
+        <span class="ctl"><button id="prev2">上一页</button><button id="next2">下一页</button><button id="full">全屏</button></span>
+      </div>
+      <div class="thumbs" id="thumbs"></div>
+    </div>
+  </section>
+
+  <div class="notes">
+    <p>网页体验版是安卓 App「随课」问号页交互的演示：在纸上按住，问号会变清楚；在问号上松手就是提问，拖到别处松手取消。</p>
+    <p>示例课堂和板书是合成材料；页面里的回答是通义千问在 2026-09-22 评测中对同样材料给出的原始输出，页面不实时调用模型。</p>
+    <p>网页体验版地址：<a href="index.html">explorerzkb.github.io/suike-demo</a></p>
+  </div>
+</div>
+<script>
+const N = 17, pad = i => String(i).padStart(2, '0');
+const img = document.getElementById('slide'), count = document.getElementById('count'), thumbs = document.getElementById('thumbs');
+const prevs = [document.getElementById('prev'), document.getElementById('prev2')];
+const nexts = [document.getElementById('next'), document.getElementById('next2')];
+let cur = 1;
+for (let i = 1; i <= N; i++) {
+  const b = document.createElement('button');
+  b.setAttribute('aria-label', '第 ' + i + ' 页');
+  b.innerHTML = '<img loading="lazy" src="intro/thumbs/P' + pad(i) + '.jpg" alt=""><i>' + i + '</i>';
+  b.onclick = () => show(i);
+  thumbs.appendChild(b);
+}
+function show(i) {
+  cur = Math.max(1, Math.min(N, i));
+  img.src = 'intro/slides/P' + pad(cur) + '.jpg';
+  img.alt = '参赛 PPT 第 ' + cur + ' 页';
+  count.textContent = '第 ' + cur + ' / ' + N + ' 页';
+  prevs.forEach(b => b.disabled = cur === 1);
+  nexts.forEach(b => b.disabled = cur === N);
+  [...thumbs.children].forEach((b, k) => b.setAttribute('aria-current', String(k + 1 === cur)));
+  const t = thumbs.children[cur - 1];
+  thumbs.scrollTo({left: t.offsetLeft - (thumbs.clientWidth - t.offsetWidth) / 2, behavior: 'smooth'});
+  if (cur < N) new Image().src = 'intro/slides/P' + pad(cur + 1) + '.jpg';
+}
+prevs.forEach(b => b.onclick = () => show(cur - 1));
+nexts.forEach(b => b.onclick = () => show(cur + 1));
+document.getElementById('full').onclick = () => {
+  const v = document.getElementById('view');
+  if (document.fullscreenElement) document.exitFullscreen();
+  else (v.requestFullscreen || v.webkitRequestFullscreen || function(){}).call(v);
+};
+addEventListener('keydown', e => {
+  if (e.target.closest && e.target.closest('video')) return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown') show(cur + 1);
+  else if (e.key === 'ArrowLeft' || e.key === 'PageUp') show(cur - 1);
+});
+let x0 = null;
+const view = document.getElementById('view');
+view.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, {passive: true});
+view.addEventListener('touchend', e => {
+  if (x0 === null) return;
+  const dx = e.changedTouches[0].clientX - x0; x0 = null;
+  if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1));
+});
+show(1);
+</script>
+</body>
+</html>

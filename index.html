@@ -5,8 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>随课 · 网页体验版</title>
 <script>
+// 评审链接（?user=…）先进作品介绍页：视频、PPT 和体验入口
+if (new URLSearchParams(location.search).has('user')) location.replace('intro.html');
 // 手机上直接全屏打开体验页，不套外框
-if (matchMedia('(max-width: 760px)').matches || (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 820)) location.replace('app.html' + location.hash);
+else if (matchMedia('(max-width: 760px)').matches || (matchMedia('(pointer: coarse)').matches && Math.min(screen.width, screen.height) < 820)) location.replace('app.html' + location.hash);
 </script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/lxgwwenkaigbscreen.css">
 <style>
