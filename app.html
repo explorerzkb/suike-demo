@@ -124,7 +124,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   <p class="fine"><b>这是网页体验版。</b>示例课堂和板书是合成的。回答是通义千问 Qwen3.8-Flash 在 2026-11-10 用现在线上后端的提示词（关掉思考）对同样材料给出的原始输出，没有改动，本页不会实时调用模型。正式产品是安卓 App，会一直录音、实时转写，在你按下时根据当时的课堂内容判断。</p>
 </main>
 
-<section id="qpage" hidden>
+<section id="qpage" hidden style="visibility:hidden">
   <div class="under" id="under"><div class="mark">?</div></div>
   <div class="frost" id="frost"><div class="blur"><div class="under"><div class="mark">?</div></div></div><div class="tint"></div></div>
   <div class="top">
@@ -187,7 +187,12 @@ SCENES.forEach((s, i) => {
   b.onclick = () => enterClass(i);
   $('lessons').appendChild(b);
 });
-function show(id){ if (id !== 'apage' && typeof closeAll === 'function') closeAll(); for (const k of ['home','qpage','apage']) $(k).hidden = (k !== id); window.scrollTo(0,0); }
+function show(id){
+  // 离开问号页时彻底收掉：停掉磨砂动画循环、复位半径，并用 visibility 让合成层（mask + blur + fixed）不再残留
+  const inQ = id === 'qpage';
+  if (!inQ) { pressing = false; target = 0; r = 0; if (raf) { cancelAnimationFrame(raf); raf = 0; } $('toast').classList.remove('on'); }
+  $('qpage').style.visibility = inQ ? '' : 'hidden'; $('frost').style.display = inQ ? '' : 'none';
+  if (id !== 'apage' && typeof closeAll === 'function') closeAll(); for (const k of ['home','qpage','apage']) $(k).hidden = (k !== id); window.scrollTo(0,0); }
 
 /* ---------- 课堂（问号页） ---------- */
 function enterClass(i){

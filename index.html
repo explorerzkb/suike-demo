@@ -33,7 +33,7 @@ iframe{border:0;width:100%;height:100%;display:block}
 .p90{--w:384px;--h:846px;--r:46px;--rim:5px;--bezel:9px;--hole:22px;--holeTop:16px;--holeLeft:50%;
   --rimbg:linear-gradient(180deg,#78acd3 0%,#a8cde5 22%,#eef0ea 46%,#f5b07a 66%,#ea7a3f 86%,#d4602b 100%)}
 .p90 .glow{background:linear-gradient(180deg,#86bde0,#f1eee6 45%,#f08a4b)}
-/* Mate XT2 锦紫：展开内屏 10.2 英寸，约 12.8:9，两道折痕 */
+/* Mate XT2 锦紫：展开内屏 10.2 英寸，约 12.8:9，展开后是一整张纸，不画折痕（折痕线条看起来像三块拼接的接缝） */
 .xt2{--w:840px;--h:590px;--r:30px;--rim:4px;--bezel:8px;--hole:16px;--holeTop:12px;--holeLeft:83.33%;
   --rimbg:linear-gradient(135deg,#2f2140 0%,#5b3f78 30%,#8d6dab 48%,#4a3264 66%,#2a1d39 100%)}
 .xt2 .glow{background:linear-gradient(135deg,#5b3f78,#9a7bb8,#3a2850)}
@@ -60,7 +60,6 @@ function setDevice(d){
   dev.className = 'device ' + d;
   scr.querySelectorAll('.hole,.crease').forEach(e => e.remove());
   const hole = document.createElement('div'); hole.className = 'hole'; scr.appendChild(hole);
-  if (d === 'xt2') for (const x of ['33.33%', '66.67%']) { const c = document.createElement('div'); c.className = 'crease'; c.style.left = x; scr.appendChild(c); }
   document.querySelectorAll('nav button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.d === d)));
   history.replaceState(null, '', '?d=' + d + location.hash);
   fit();
