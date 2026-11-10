@@ -85,10 +85,10 @@ video{display:block;width:100%;aspect-ratio:16/9;background:#111}
   <section id="video">
     <div class="sec-head">
       <h2><span class="n">一</span>作品视频</h2>
-      <span class="meta">3 分 24 秒 · 有旁白，请打开声音 · <a href="intro/suike-video.mp4" download="随课-作品视频.mp4">下载视频</a></span>
+      <span class="meta">2 分 50 秒 · 有旁白，请打开声音 · <a href="intro/suike-video.mp4" download="随课-作品视频.mp4">下载视频</a></span>
     </div>
     <div class="frame">
-      <video controls playsinline preload="metadata" poster="intro/poster.jpg" src="intro/suike-video.mp4"></video>
+      <video controls playsinline preload="metadata" poster="intro/poster.jpg?v=3" src="intro/suike-video.mp4?v=3"></video>
     </div>
   </section>
 
@@ -126,13 +126,13 @@ let cur = 1;
 for (let i = 1; i <= N; i++) {
   const b = document.createElement('button');
   b.setAttribute('aria-label', '第 ' + i + ' 页');
-  b.innerHTML = '<img loading="lazy" src="intro/thumbs/P' + pad(i) + '.jpg" alt=""><i>' + i + '</i>';
+  b.innerHTML = '<img loading="lazy" src="intro/thumbs/P' + pad(i) + '.jpg?v=3" alt=""><i>' + i + '</i>';
   b.onclick = () => show(i);
   thumbs.appendChild(b);
 }
 function show(i) {
   cur = Math.max(1, Math.min(N, i));
-  img.src = 'intro/slides/P' + pad(cur) + '.jpg';
+  img.src = 'intro/slides/P' + pad(cur) + '.jpg?v=3';
   img.alt = '参赛 PPT 第 ' + cur + ' 页';
   count.textContent = '第 ' + cur + ' / ' + N + ' 页';
   prevs.forEach(b => b.disabled = cur === 1);
