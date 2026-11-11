@@ -167,7 +167,7 @@ function startVideo(position = 0, shouldPlay = true) {
   };
   video.onloadedmetadata = resume;
   video.preload = 'metadata';
-  video.src = quality.value === 'hd' ? 'intro/suike-video.mp4' : assets + '/suike-720.mp4';
+  video.src = quality.value === 'hd' ? 'intro/suike-video.mp4?v=11' : assets + '/suike-720-v11.mp4';
   if (shouldPlay) {
     video.play().catch(error => {
       if (revision !== playbackRevision || error.name === 'AbortError') return;
