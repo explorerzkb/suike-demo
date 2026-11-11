@@ -1,13 +1,12 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-assets="intro/f06273fab179c31c">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>随课 · 作品视频与 PPT</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.7.0/lxgwwenkaigbscreen.css">
-<style>
+<link rel="icon" href="data:,"><style>@font-face{font-family:IntroWenKai;src:url("intro/f06273fab179c31c/wenkai.woff2") format("woff2");font-display:swap}
 :root{--ink:#3a332d;--sub:#80766c;--line:#d6cdbf;--paper:#f2ede4;--accent:#b5562b;
-  --font:"LXGW WenKai Screen","霞鹜文楷 GB 屏幕阅读版","Kaiti SC","STKaiti","KaiTi",serif}
+  --font:IntroWenKai,"霞鹜文楷 GB 屏幕阅读版","Kaiti SC","STKaiti","KaiTi",serif}
 *{box-sizing:border-box}
 html{background:#e9e3d8}
 body{margin:0;color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.7;
@@ -65,6 +64,22 @@ video{display:block;width:100%;aspect-ratio:16/9;background:#111}
   .view button span{opacity:1;width:36px;height:36px;line-height:36px;font-size:18px}
   .thumbs button{width:92px}
 }
+.frame{position:relative;aspect-ratio:16/9}
+.video-cover{display:block;position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+#play{position:absolute;inset:0;margin:auto;width:max-content;height:max-content;cursor:pointer;border:1px solid #fff9;border-radius:999px;background:#211b17e6;color:#fffaf2;padding:12px 24px;font:inherit}
+#play:focus-visible,.bar button:focus-visible,.thumbs button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.video-tools{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:14px;color:var(--sub)}
+.video-tools select,.status button{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:5px;padding:2px 6px}
+#video-status:empty{display:none}
+.status{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;gap:8px;background:var(--paper);color:var(--ink);text-align:center}
+.status[hidden],.frame [hidden],.video-tools [hidden]{display:none}
+.thumbs{position:relative}
+.view .status button{position:static;width:auto;color:var(--ink);background:var(--paper);border:1px solid var(--line);padding:4px 12px}
+.view:fullscreen{background:#141210}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+body.ppt-expanded{overflow:hidden}
+.deck.expanded{position:fixed;inset:0;z-index:5;border-radius:0;display:flex;flex-direction:column}
+.deck.expanded .view{flex:1;min-height:0;background:#141210}
 </style>
 </head>
 <body>
@@ -74,10 +89,10 @@ video{display:block;width:100%;aspect-ratio:16/9;background:#111}
       <h1>随课</h1>
       <p class="lead">上课有疑问跟不上，一键随课回来。</p>
       <div class="tag">课堂伴学智能体 · 命题领域：教育 · 第二届全国人工智能应用创新大赛参赛作品</div>
-      <nav class="jump"><a href="#video">作品视频</a><a href="#ppt">参赛 PPT</a><a href="index.html">网页体验版</a></nav>
+      <nav class="jump"><a href="#video">作品视频</a><a href="#ppt">参赛 PPT</a><a href="https://explorerzkb.github.io/suike-demo/">网页体验版</a></nav>
     </div>
     <div class="cta">
-      <a class="btn" href="index.html">打开网页体验版<span class="arr">→</span></a>
+      <a class="btn" href="https://explorerzkb.github.io/suike-demo/">打开网页体验版<span class="arr">→</span></a>
       <small>手机、电脑浏览器都能直接用，不用账号</small>
     </div>
   </header>
@@ -88,8 +103,14 @@ video{display:block;width:100%;aspect-ratio:16/9;background:#111}
       <span class="meta">2 分 57 秒 · 有旁白，请打开声音 · <a href="intro/suike-video.mp4" download="随课-作品视频.mp4">下载视频</a></span>
     </div>
     <div class="frame">
-      <video controls playsinline preload="metadata" poster="intro/poster.jpg?v=10" src="intro/suike-video.mp4?v=10"></video>
+      <img class="video-cover" src="intro/f06273fab179c31c/poster.jpg" alt="" width="1280" height="720" fetchpriority="high"><button id="play" type="button">▶ 播放作品视频</button><video id="video-player" controls playsinline preload="none" poster="intro/f06273fab179c31c/poster.jpg" hidden></video>
     </div>
+    <div class="video-tools">
+      <label>画质 <select id="quality"><option value="smooth">流畅 · 720p</option><option value="hd">高清 · 1080p</option></select></label>
+      <span id="video-status" role="status"></span>
+      <button id="video-retry" type="button" hidden>重试播放</button>
+    </div>
+    <noscript><p>请使用上方的下载视频链接观看。</p></noscript>
   </section>
 
   <section id="ppt">
@@ -100,6 +121,7 @@ video{display:block;width:100%;aspect-ratio:16/9;background:#111}
     <div class="deck">
       <div class="view" id="view">
         <img id="slide" alt="">
+        <div id="slide-status" class="status"><span id="slide-message">滑到这里后加载 PPT</span><button id="slide-retry" type="button" hidden>重新加载</button></div>
         <button class="prev" id="prev" aria-label="上一页"><span>‹</span></button>
         <button class="next" id="next" aria-label="下一页"><span>›</span></button>
       </div>
@@ -114,55 +136,196 @@ video{display:block;width:100%;aspect-ratio:16/9;background:#111}
   <div class="notes">
     <p>网页体验版是安卓 App「随课」问号页交互的演示：在纸上按住，问号会变清楚；在问号上松手就是提问，拖到别处松手取消。</p>
     <p>示例课堂和板书是合成材料；页面里的回答是通义千问在 2026-09-22 评测中对同样材料给出的原始输出，页面不实时调用模型。</p>
-    <p>网页体验版地址：<a href="index.html">explorerzkb.github.io/suike-demo</a></p>
+    <p><a id="alternate" href="https://38.76.164.218:8443/suike/intro.html" hidden>备用入口</a></p>
+    <p>网页体验版地址：<a href="https://explorerzkb.github.io/suike-demo/">explorerzkb.github.io/suike-demo</a></p>
   </div>
 </div>
-<script>
-const N = 17, pad = i => String(i).padStart(2, '0');
-const img = document.getElementById('slide'), count = document.getElementById('count'), thumbs = document.getElementById('thumbs');
-const prevs = [document.getElementById('prev'), document.getElementById('prev2')];
-const nexts = [document.getElementById('next'), document.getElementById('next2')];
-let cur = 1;
-for (let i = 1; i <= N; i++) {
-  const b = document.createElement('button');
-  b.setAttribute('aria-label', '第 ' + i + ' 页');
-  b.innerHTML = '<img loading="lazy" src="intro/thumbs/P' + pad(i) + '.jpg?v=3" alt=""><i>' + i + '</i>';
-  b.onclick = () => show(i);
-  thumbs.appendChild(b);
+<script>const element = id => document.getElementById(id);
+const assets = document.documentElement.dataset.assets;
+const video = element('video-player');
+const quality = element('quality');
+const cover = document.querySelector('.video-cover');
+const play = element('play');
+const videoRetry = element('video-retry');
+const videoStatus = element('video-status');
+let playbackRevision = 0;
+
+function setVideoStatus(message, retry = false) {
+  videoStatus.textContent = message;
+  videoRetry.hidden = !retry;
 }
-function show(i) {
-  cur = Math.max(1, Math.min(N, i));
-  img.src = 'intro/slides/P' + pad(cur) + '.jpg?v=3';
-  img.alt = '参赛 PPT 第 ' + cur + ' 页';
-  count.textContent = '第 ' + cur + ' / ' + N + ' 页';
-  prevs.forEach(b => b.disabled = cur === 1);
-  nexts.forEach(b => b.disabled = cur === N);
-  [...thumbs.children].forEach((b, k) => b.setAttribute('aria-current', String(k + 1 === cur)));
-  const t = thumbs.children[cur - 1];
-  thumbs.scrollTo({left: t.offsetLeft - (thumbs.clientWidth - t.offsetWidth) / 2, behavior: 'smooth'});
-  if (cur < N) new Image().src = 'intro/slides/P' + pad(cur + 1) + '.jpg';
+
+function startVideo(position = 0, shouldPlay = true) {
+  const revision = ++playbackRevision;
+  cover.hidden = true;
+  play.hidden = true;
+  video.hidden = false;
+  setVideoStatus('正在加载视频…');
+  const resume = () => {
+    if (position > 0 && Number.isFinite(video.duration)) video.currentTime = Math.min(position, video.duration);
+    if (!shouldPlay) setVideoStatus('');
+  };
+  video.onloadedmetadata = resume;
+  video.preload = 'metadata';
+  video.src = quality.value === 'hd' ? 'intro/suike-video.mp4' : assets + '/suike-720.mp4';
+  if (shouldPlay) {
+    video.play().catch(error => {
+      if (revision !== playbackRevision || error.name === 'AbortError') return;
+      setVideoStatus('视频未能播放，可以重试或下载原件。', true);
+    });
+  }
 }
-prevs.forEach(b => b.onclick = () => show(cur - 1));
-nexts.forEach(b => b.onclick = () => show(cur + 1));
-document.getElementById('full').onclick = () => {
-  const v = document.getElementById('view');
-  if (document.fullscreenElement) document.exitFullscreen();
-  else (v.requestFullscreen || v.webkitRequestFullscreen || function(){}).call(v);
+
+play.onclick = () => startVideo();
+videoRetry.onclick = () => startVideo(video.currentTime || 0);
+quality.onchange = () => {
+  if (!video.hidden) startVideo(video.currentTime || 0, !video.paused || !!video.error);
 };
-addEventListener('keydown', e => {
-  if (e.target.closest && e.target.closest('video')) return;
-  if (e.key === 'ArrowRight' || e.key === 'PageDown') show(cur + 1);
-  else if (e.key === 'ArrowLeft' || e.key === 'PageUp') show(cur - 1);
+video.addEventListener('playing', () => setVideoStatus(''));
+video.addEventListener('waiting', () => setVideoStatus('正在缓冲视频…'));
+video.addEventListener('pause', () => { if (!video.error) setVideoStatus(''); });
+video.addEventListener('error', () => setVideoStatus('视频加载失败，可以重试或下载原件。', true));
+
+const total = 17;
+const view = element('view');
+const thumbs = element('thumbs');
+const previous = [element('prev'), element('prev2')];
+const next = [element('next'), element('next2')];
+const slideStatus = element('slide-status');
+const slideMessage = element('slide-message');
+const slideRetry = element('slide-retry');
+const slides = new Map();
+const pageName = number => 'P' + String(number).padStart(2, '0');
+let current = 1;
+let active = false;
+let slideRevision = 0;
+
+function imageFrom(url) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => resolve(image);
+    image.onerror = reject;
+    image.src = url;
+  });
+}
+
+function loadSlide(number, width) {
+  const key = number + ':' + width;
+  if (!slides.has(key)) {
+    const path = assets + '/slides/' + pageName(number) + '-' + width;
+    const image = imageFrom(path + '.webp')
+      .catch(() => imageFrom(path + '.jpg'))
+      .catch(error => {
+        slides.delete(key);
+        throw error;
+      });
+    slides.set(key, image);
+  }
+  return slides.get(key);
+}
+
+function updateControls(scroll) {
+  element('count').textContent = '第 ' + current + ' / ' + total + ' 页';
+  previous.forEach(button => button.disabled = current === 1);
+  next.forEach(button => button.disabled = current === total);
+  Array.from(thumbs.children).forEach((button, index) => {
+    button.setAttribute('aria-current', String(index + 1 === current));
+  });
+  const selected = thumbs.children[current - 1];
+  if (scroll && selected) {
+    thumbs.scrollTo({left: selected.offsetLeft - (thumbs.clientWidth - selected.offsetWidth) / 2, behavior: 'smooth'});
+  }
+}
+
+async function show(number, scroll = true) {
+  current = Math.max(1, Math.min(total, number));
+  updateControls(scroll);
+  if (!active) return;
+  const requested = current;
+  const revision = ++slideRevision;
+  const width = view.clientWidth * devicePixelRatio > 768 ? 1440 : 768;
+  slideMessage.textContent = '正在加载第 ' + requested + ' 页…';
+  slideRetry.hidden = true;
+  slideStatus.hidden = false;
+  try {
+    const image = await loadSlide(requested, width);
+    if (revision !== slideRevision) return;
+    image.id = 'slide';
+    image.alt = '参赛 PPT 第 ' + requested + ' 页';
+    const currentImage = element('slide');
+    if (currentImage !== image) currentImage.replaceWith(image);
+    slideStatus.hidden = true;
+    if (requested < total) loadSlide(requested + 1, width).catch(() => {});
+  } catch {
+    if (revision !== slideRevision) return;
+    slideMessage.textContent = '第 ' + requested + ' 页加载失败。';
+    slideRetry.hidden = false;
+  }
+}
+
+function activate() {
+  if (active) return;
+  active = true;
+  for (let number = 1; number <= total; number++) {
+    const button = document.createElement('button');
+    const thumbnail = new Image();
+    const label = document.createElement('i');
+    button.type = 'button';
+    button.setAttribute('aria-label', '第 ' + number + ' 页');
+    button.onclick = () => show(number);
+    thumbnail.alt = '';
+    thumbnail.loading = 'lazy';
+    thumbnail.src = assets + '/thumbs/' + pageName(number) + '.jpg';
+    label.textContent = number;
+    button.append(thumbnail, label);
+    thumbs.append(button);
+  }
+  show(current, false);
+}
+
+updateControls(false);
+const observer = new IntersectionObserver(entries => {
+  if (!entries.some(entry => entry.isIntersecting)) return;
+  observer.disconnect();
+  activate();
 });
-let x0 = null;
-const view = document.getElementById('view');
-view.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; }, {passive: true});
-view.addEventListener('touchend', e => {
-  if (x0 === null) return;
-  const dx = e.changedTouches[0].clientX - x0; x0 = null;
-  if (Math.abs(dx) > 40) show(cur + (dx < 0 ? 1 : -1));
+observer.observe(view);
+slideRetry.onclick = () => show(current, false);
+previous.forEach(button => button.onclick = () => { activate(); show(current - 1); });
+next.forEach(button => button.onclick = () => { activate(); show(current + 1); });
+const deck = view.closest('.deck');
+const fullButton = element('full');
+function setExpanded(expanded) {
+  deck.classList.toggle('expanded', expanded);
+  document.body.classList.toggle('ppt-expanded', expanded);
+  fullButton.textContent = expanded ? '退出全屏' : '全屏';
+}
+fullButton.onclick = () => {
+  activate();
+  setExpanded(!deck.classList.contains('expanded'));
+};
+addEventListener('keydown', event => {
+  if (event.key === 'Escape') setExpanded(false);
+  if (!active || event.target.closest?.('video, select')) return;
+  if (event.key === 'ArrowRight' || event.key === 'PageDown') show(current + 1);
+  else if (event.key === 'ArrowLeft' || event.key === 'PageUp') show(current - 1);
 });
-show(1);
+let touchStart = null;
+view.addEventListener('touchstart', event => { touchStart = event.touches[0].clientX; }, {passive: true});
+view.addEventListener('touchend', event => {
+  if (touchStart === null) return;
+  const distance = event.changedTouches[0].clientX - touchStart;
+  touchStart = null;
+  if (Math.abs(distance) > 40) show(current + (distance < 0 ? 1 : -1));
+});
+view.addEventListener('touchcancel', () => { touchStart = null; });
+
+const alternate = element('alternate');
+if (location.origin === new URL(alternate.href).origin) {
+  alternate.href = 'https://explorerzkb.github.io/suike-demo/intro.html';
+  alternate.textContent = 'GitHub Pages 入口';
+  alternate.hidden = false;
+}
 </script>
 </body>
 </html>
